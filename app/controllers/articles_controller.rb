@@ -1,8 +1,9 @@
 class ArticlesController < ApplicationController
   def index
-    articles = Article.all
-    render json: articles,
+    articles = Article.all.includes(:user).order(created_at: :desc)
+    render json: articles, each_serializer: ArticleListSerializer
   end
+  
 
   def show
     # Initialize session[:page_views] if it doesn't exist
